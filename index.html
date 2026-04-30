@@ -338,6 +338,10 @@
 <body>
   <div class="portfolio">
 
+    <!-- ============================================
+         NAV BAR
+         - Change "Saksham Sharma" to update your name
+    ============================================ -->
     <nav>
       <span class="nav-name">Saksham Sharma</span>
       <div class="nav-links">
@@ -347,11 +351,18 @@
       </div>
     </nav>
 
+    <!-- ============================================
+         HERO SECTION
+         - Change the h1 tagline if you want
+         - Add/remove badges below (the pill-shaped labels)
+         - Change your location, GPA etc in the badges
+    ============================================ -->
     <section class="hero">
       <p class="hero-tag">Mechatronics Engineering Student</p>
       <h1>I design systems,<br>build them by hand,<br>and <span>make them work.</span></h1>
       <p class="hero-sub">Second-year student at Humber Polytechnic. I work across embedded systems, electromechanical design, and hardware prototyping — from schematic to soldering iron to final build.</p>
       <div class="hero-badges">
+        <!-- GREEN badge = highlighted. Remove class="green" to make it grey -->
         <span class="badge green">Dean's List — 3 semesters</span>
         <span class="badge">GPA 84.4%</span>
         <span class="badge">WHMIS Certified</span>
@@ -363,6 +374,10 @@
       </div>
     </section>
 
+    <!-- ============================================
+         STATS BAR
+         - Change the numbers and labels as needed
+    ============================================ -->
     <div class="stats">
       <div class="stat">
         <div class="stat-num">4</div>
@@ -382,51 +397,112 @@
       </div>
     </div>
 
+    <!-- ============================================
+         PROJECTS SECTION
+         - Each project is a "project-card" block
+         - To ADD a new project: copy one full block
+           from <div class="project-card"> to </div>
+           and paste it before </section>
+         - To REMOVE a project: delete the full block
+         - HOW TO ADD PHOTOS:
+           1. Upload photo to imgur.com
+           2. Click the photo, copy URL from browser
+              e.g. https://imgur.com/XXXXXXX
+           3. Change it to: https://i.imgur.com/XXXXXXX.jpeg
+           4. Paste into the src="" of an <img> tag
+         - HOW TO ADD A VIDEO BUTTON:
+           Add this line inside proj-detail, replacing YOUR_YOUTUBE_ID:
+           <a href="https://youtube.com/watch?v=YOUR_YOUTUBE_ID" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;background:#5DCAA5;color:#04342C;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;">▶ Watch Demo</a>
+    ============================================ -->
     <section class="projects" id="projects">
       <p class="section-label">Work</p>
       <h2 class="section-title">Projects</h2>
       <p class="section-sub">Click any project to read more</p>
 
+      <!-- ---- PROJECT 1: LASER TURRET ---- -->
       <div class="project-card" onclick="toggleProject(this)">
         <div class="proj-header">
-          <span class="proj-title">Automated Turret Control System</span>
-          <span class="proj-type">Electromechanical</span>
+          <!-- Change project title and type label here -->
+          <span class="proj-title">Laser Turret Control System</span>
+          <span class="proj-type">Embedded Systems</span>
         </div>
-        <p class="proj-desc">A 3-motor electromechanical assembly designed and built from scratch — full BOM, component positioning, wiring, and embedded control.</p>
-        <div class="proj-detail">Independently designed a system using two servo motors and one rotational motor. Authored the complete Bill of Materials, determined all component positioning, and built every electrical and mechanical connection from scratch. Programmed in C on the TM4C123GH6PM (ARM Cortex-M4) using PWM techniques for precise motor control and UART communication.</div>
+        <!-- Short description shown always (1-2 sentences) -->
+        <p class="proj-desc">A 3D-printed microcontroller-based targeting turret with two modes — autonomous IR-sensor targeting and manual potentiometer control — built and programmed from scratch.</p>
+        <!-- Full detail shown when card is clicked -->
+        <div class="proj-detail">
+          <p style="margin-bottom:10px;">Designed and built a dual-mode targeting turret on the TM4C123GH6PM (ARM Cortex-M4). In Autonomous Mode, an IR sensor detects objects and drives a pan servo to track them. In Manual Mode, two potentiometers control pan and tilt independently. A DC motor drives a soft projectile launcher, triggered by a dedicated push button. A 16x2 LCD displays live mode, distance, and servo angles.</p>
+          <p style="margin-bottom:10px;">Authored the full Bill of Materials, wired every electrical connection on breadboard, and programmed all peripherals in C — ADC sampling at 100Hz, PWM for two servos and the launch motor, UART communication, GPIO interrupt-driven mode switching with 10ms debounce, and 4x hardware oversampling to eliminate sensor noise.</p>
+          <!-- PHOTO GRID - replace src URLs with your Imgur links -->
+          <!-- Format: https://i.imgur.com/XXXXXXX.jpeg -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+            <img src="https://imgur.com/dmZdz69.jpeg" onerror="this.style.display='none'" style="width:100%;border-radius:6px;object-fit:cover;height:140px;" alt="Turret build">
+            <img src="https://imgur.com/Bl7lBKB.jpeg" onerror="this.style.display='none'" style="width:100%;border-radius:6px;object-fit:cover;height:140px;" alt="Turret wiring">
+          </div>
+          <!-- VIDEO BUTTON - paste your YouTube link here -->
+          <!-- <a href="YOUR_YOUTUBE_LINK" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;background:#5DCAA5;color:#04342C;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;">▶ Watch Demo</a> -->
+        </div>
+        <!-- TAGS - add or remove skill tags as needed -->
         <div class="proj-tags">
           <span class="proj-tag">Embedded C</span>
           <span class="proj-tag">ARM Cortex-M4</span>
           <span class="proj-tag">PWM</span>
-          <span class="proj-tag">Servo motors</span>
-          <span class="proj-tag">BOM</span>
+          <span class="proj-tag">ADC</span>
+          <span class="proj-tag">IR Sensor</span>
+          <span class="proj-tag">Servo Motors</span>
+          <span class="proj-tag">LCD Display</span>
+          <span class="proj-tag">3D Printing</span>
         </div>
         <p class="expand-hint">+ click to expand</p>
       </div>
+      <!-- ---- END PROJECT 1 ---- -->
 
+      <!-- ---- PROJECT 2: BOX PACKING MACHINE ---- -->
       <div class="project-card" onclick="toggleProject(this)">
         <div class="proj-header">
-          <span class="proj-title">Automated Ball Transferring Mechanism</span>
-          <span class="proj-type">Mechanical Design</span>
+          <span class="proj-title">Automated Box Erecting & Packing Machine</span>
+          <span class="proj-type">Mechatronics</span>
         </div>
-        <p class="proj-desc">Diagnosed and resolved a structural bonding failure mid-build by re-engineering the base mounting system entirely.</p>
-        <div class="proj-detail">Mid-build, identified a structural bonding failure in the base assembly. Traced the root cause, then re-engineered the base mounts using L-joint brackets — eliminating the failure mode entirely and validating the fix. Demonstrates the ability to diagnose under pressure and redesign on the fly rather than patch around a problem.</div>
+        <p class="proj-desc">A full-scale industrial automated packaging machine that erects flat cardboard blanks, fills them with exactly 6 M6 nuts, closes and seals the box — built by Team Sapphire for MENG-2500.</p>
+        <div class="proj-detail">
+          <p style="margin-bottom:10px;">Designed and built an automated box packing system using an aluminum extrusion frame, pneumatic cylinders, dual conveyor belts, a solenoid-based nut dispenser, and relay ladder logic control. The machine pulls flat box blanks from a magazine using suction cups, opens and erects them, transports them via conveyor, dispenses exactly 6 M6 nuts using a solenoid gate with 6 tubes, folds all flaps closed, and applies a label seal.</p>
+          <p style="margin-bottom:10px;">My contributions included authoring the full BOM, SolidWorks CAD modeling and engineering drawings, pneumatic force calculations, and ladder logic design. The machine achieved 5 boxes/min throughput, 83% efficiency, and passed all validation tests including a 1-hour continuous run with zero critical failures.</p>
+          <!-- PHOTO GRID - replace src URLs with your Imgur links -->
+          <!-- Format: https://i.imgur.com/XXXXXXX.jpeg -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+            <img src="https://imgur.com/3usn3XV.jpeg" onerror="this.style.display='none'" style="width:100%;border-radius:6px;object-fit:cover;height:140px;" alt="Box machine team">
+            <img src="https://imgur.com/Uc6cr9O.jpeg" onerror="this.style.display='none'" style="width:100%;border-radius:6px;object-fit:cover;height:140px;" alt="Box machine build">
+            <img src="https://imgur.com/0RKWVlH.jpeg" onerror="this.style.display='none'" style="width:100%;border-radius:6px;object-fit:cover;height:140px;" alt="Box machine build during assembly">
+
+          </div>
+          <!-- VIDEO BUTTON - uncomment and paste your YouTube link -->
+          <!-- <a href="YOUR_YOUTUBE_LINK" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;background:#5DCAA5;color:#04342C;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;">▶ Watch Demo</a> -->
+        </div>
         <div class="proj-tags">
-          <span class="proj-tag">Root cause analysis</span>
-          <span class="proj-tag">Mechanical assembly</span>
-          <span class="proj-tag">Redesign</span>
-          <span class="proj-tag">Validation</span>
+          <span class="proj-tag">Pneumatics</span>
+          <span class="proj-tag">Relay Ladder Logic</span>
+          <span class="proj-tag">SolidWorks CAD</span>
+          <span class="proj-tag">Conveyor Systems</span>
+          <span class="proj-tag">BOM</span>
+          <span class="proj-tag">Solenoid</span>
+          <span class="proj-tag">Aluminum Extrusion</span>
+          <span class="proj-tag">3D Printing</span>
         </div>
         <p class="expand-hint">+ click to expand</p>
       </div>
+      <!-- ---- END PROJECT 2 ---- -->
 
+      <!-- ---- PROJECT 3: MECHANICAL CLOCK ---- -->
+      <!-- Update description and add photos when ready -->
       <div class="project-card" onclick="toggleProject(this)">
         <div class="proj-header">
           <span class="proj-title">Mechanical Clock Redesign</span>
           <span class="proj-type">Gear Systems</span>
         </div>
         <p class="proj-desc">Worked across a 5–6 gear drivetrain, redesigning and validating timing and mechanical relationships between stages.</p>
-        <div class="proj-detail">Analyzed and reworked a multi-stage gear drivetrain, managing gear ratios, tolerances, and mechanical timing across 5–6 gears. Required careful attention to how changes in one stage propagated through the rest of the system — the same systems thinking that applies to precision manufacturing environments.</div>
+        <div class="proj-detail">
+          Analyzed and reworked a multi-stage gear drivetrain, managing gear ratios, tolerances, and mechanical timing across 5–6 gears. Required careful attention to how changes in one stage propagated through the rest of the system — the same systems thinking that applies to precision manufacturing environments.
+          <!-- Add photos here when you have them -->
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">Gear trains</span>
           <span class="proj-tag">Mechanical design</span>
@@ -434,23 +510,58 @@
         </div>
         <p class="expand-hint">+ click to expand</p>
       </div>
+      <!-- ---- END PROJECT 3 ---- -->
 
+      <!-- ---- PROJECT 4: PCB ---- -->
+      <!-- Add photos when you have them -->
       <div class="project-card" onclick="toggleProject(this)">
         <div class="proj-header">
           <span class="proj-title">Hand-Soldered Single-Layer PCB</span>
           <span class="proj-type">Electronics</span>
         </div>
-        <p class="proj-desc">Designed and hand-soldered a single-layer PCB as part of Electronic Circuit Analysis coursework at Humber.</p>
-        <div class="proj-detail">Designed the PCB layout, soldered all components by hand, and used oscilloscopes and multimeters to verify signals and diagnose faults. Developed the habit of working to a standard where quality failures have downstream consequences — directly applicable to precision electronics manufacturing.</div>
+        <p class="proj-desc">Designed and hand-soldered a single-layer PCB as part of Electronic Circuit Analysis coursework at Humber — from schematic to verified working board.</p>
+        <div class="proj-detail">
+          Designed the full PCB layout from schematic, placed and routed all components, then hand-soldered every connection. Used oscilloscopes and multimeters to verify signals at each test point and diagnose faults. Developed the discipline of working to a quality standard where failures have real downstream consequences — the same mindset required in precision electronics manufacturing environments.
+          <!-- Add photos here when you have them -->
+        </div>
         <div class="proj-tags">
           <span class="proj-tag">PCB design</span>
           <span class="proj-tag">Hand soldering</span>
           <span class="proj-tag">Oscilloscope</span>
           <span class="proj-tag">Multimeter</span>
+          <span class="proj-tag">Circuit Analysis</span>
           <span class="proj-tag">Fault diagnosis</span>
         </div>
         <p class="expand-hint">+ click to expand</p>
       </div>
+      <!-- ---- END PROJECT 4 ---- -->
+
+      <!-- ====================================================
+           TO ADD A NEW PROJECT (e.g. MATLAB, Clock etc.)
+           Copy the block below and fill in your details:
+
+      <div class="project-card" onclick="toggleProject(this)">
+        <div class="proj-header">
+          <span class="proj-title">YOUR PROJECT NAME</span>
+          <span class="proj-type">Category</span>
+        </div>
+        <p class="proj-desc">Short 1-2 sentence description.</p>
+        <div class="proj-detail">
+          <p>Longer description of what you did.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+            <img src="https://i.imgur.com/XXXXXXX.jpeg" onerror="this.style.display='none'" style="width:100%;border-radius:6px;object-fit:cover;height:140px;" alt="photo description">
+            <img src="https://i.imgur.com/XXXXXXX.jpeg" onerror="this.style.display='none'" style="width:100%;border-radius:6px;object-fit:cover;height:140px;" alt="photo description">
+          </div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Tag 1</span>
+          <span class="proj-tag">Tag 2</span>
+        </div>
+        <p class="expand-hint">+ click to expand</p>
+      </div>
+
+      ==================================================== -->
+
     </section>
 
     <section class="skills-section" id="skills">
