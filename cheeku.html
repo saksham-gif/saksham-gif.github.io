@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sorry Cheeku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@500;700;800&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #ffe9ee;
+    --bg2: #ffd6df;
+    --ink: #4a1e2c;
+    --soft: #8a4a5c;
+    --rose: #e8466d;
+    --rose-dark: #c22c52;
+    --card: #fffafb;
+    --grey: #b9a3aa;
+  }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: radial-gradient(circle at 20% 10%, var(--bg2), var(--bg) 60%);
+    color: var(--ink);
+    font-family: "Nunito", system-ui, sans-serif;
+    overflow: hidden;
+    padding-inline: 16px;
+  }
+  canvas#hearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  main {
+    position: relative; z-index: 1;
+    height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 18px;
+  }
+  h1 {
+    font-family: "Caveat", "Comic Sans MS", cursive;
+    font-size: clamp(2.8rem, 11vw, 5.5rem);
+    line-height: 1; margin: 0; color: var(--rose-dark);
+    text-wrap: balance;
+  }
+  p.sub { font-size: 1.15rem; color: var(--soft); margin: 0; max-width: 32ch; line-height: 1.5; }
+  .btn {
+    font: 800 1.05rem "Nunito", system-ui, sans-serif;
+    border: 0; border-radius: 999px; padding: 14px 30px; cursor: pointer;
+    transition: transform .15s ease, background .15s;
+  }
+  .btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .btn-yes { background: var(--rose); color: #fff; box-shadow: 0 6px 0 var(--rose-dark); }
+  .btn-yes:hover { transform: translateY(-2px); }
+  .btn-yes:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--rose-dark); }
+  .btn-no { background: #fff; color: var(--soft); border: 2px solid var(--grey); }
+
+  .overlay { position: fixed; inset: 0; z-index: 5; background: rgba(74,30,44,.25); }
+  .popup {
+    position: fixed; z-index: 10;
+    width: min(340px, calc(100vw - 32px));
+    background: var(--card);
+    border-radius: 22px;
+    padding: 26px 22px 24px;
+    box-shadow: 0 18px 50px rgba(74,30,44,.25);
+    text-align: center;
+    animation: pop .35s cubic-bezier(.3,1.6,.5,1);
+  }
+  .popup h2 { font-family: "Caveat", cursive; font-size: 2.3rem; margin: 0 0 6px; color: var(--rose-dark); line-height: 1.05; }
+  .popup p { margin: 0 0 20px; color: var(--soft); }
+  .popup .row { display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; min-height: 56px; }
+  @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  #yay { display: none; }
+  #yay h1 { font-size: clamp(3rem, 13vw, 6.5rem); }
+  @media (prefers-reduced-motion: reduce) { .popup { animation: none; } }
+</style>
+
+</head><body>
+<canvas id="hearts"></canvas>
+
+<main id="start">
+  <h1>I'm really sorry, Cheeku</h1>
+  <p class="sub">I messed up and I know it. You're my best friend and I hate that you're mad at me. Please forgive me?</p>
+  <button class="btn btn-yes" id="open">Read my apology</button>
+</main>
+
+<main id="yay">
+  <h1>YAYYY!! 🥹</h1>
+  <p class="sub">Thank you for forgiving me, Cheeku. Best friends forever. I owe you a treat, you pick.</p>
+</main>
+
+<script>
+const pleas = [
+  ["Pleaseeeee 🥺", "I am your baby"],
+  ["Pleaseeeeeeee", "i am your babyyyy 🥺🥺"],
+  ["PLEASEEEEE", "your baby is crying rn 😭"],
+  ["pretty pleaseee", "with extra cheese on top 🧀"],
+  ["cheekuuuuu 😭", "i will never do it again, promise"],
+  ["pleaseeeeeeeeee", "i'm on my knees rn 🙏"],
+  ["ok last one (not really)", "PLEASEEEE I AM YOUR BABY"]
+];
+let dodges = 0, pleaCount = 0, yesScale = 1;
+
+function openPopup(title, text, offset) {
+  if (!document.querySelector(".overlay")) {
+    const o = document.createElement("div"); o.className = "overlay"; document.body.appendChild(o);
+  }
+  const p = document.createElement("div");
+  p.className = "popup";
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const w = Math.min(340, vw - 32);
+  let left = (vw - w) / 2, top = vh / 2 - 130;
+  if (offset) {
+    left = Math.max(16, Math.min(vw - w - 16, left + (Math.random() - .5) * vw * .5));
+    top = Math.max(16, Math.min(vh - 280, top + (Math.random() - .5) * vh * .45));
+  }
+  p.style.left = left + "px"; p.style.top = top + "px";
+  p.innerHTML = `<h2>${title}</h2><p>${text}</p>
+    <div class="row">
+      <button class="btn btn-yes">Ok, I forgive you</button>
+      <button class="btn btn-no">No</button>
+    </div>`;
+  document.body.appendChild(p);
+  const yes = p.querySelector(".btn-yes"), no = p.querySelector(".btn-no");
+  yes.style.transform = `scale(${yesScale})`;
+  yes.addEventListener("click", forgive);
+
+  // No button runs away the first few times
+  const run = (e) => {
+    if (dodges >= 5) return;
+    e.preventDefault();
+    dodges++;
+    const r = no.getBoundingClientRect();
+    no.style.position = "fixed";
+    no.style.zIndex = 20;
+    let x, y, tries = 0;
+    do {
+      x = 16 + Math.random() * (vw - r.width - 32);
+      y = 16 + Math.random() * (vh - r.height - 32);
+      tries++;
+    } while (Math.hypot(x - r.left, y - r.top) < 120 && tries < 20);
+    no.style.left = x + "px"; no.style.top = y + "px";
+  };
+  no.addEventListener("mouseenter", run);
+  no.addEventListener("touchstart", run, { passive: false });
+  no.addEventListener("click", (e) => {
+    if (dodges < 5) { run(e); return; }
+    const [t, s] = pleas[pleaCount % pleas.length];
+    pleaCount++;
+    yesScale = Math.min(yesScale + 0.12, 1.9);
+    document.querySelectorAll(".popup .btn-yes").forEach(b => b.style.transform = `scale(${yesScale})`);
+    no.style.transform = `scale(${Math.max(1 - pleaCount * 0.08, 0.5)})`;
+    openPopup(t, s, true);
+  });
+}
+
+function forgive() {
+  document.querySelectorAll(".popup, .overlay").forEach(el => el.remove());
+  document.getElementById("start").style.display = "none";
+  document.getElementById("yay").style.display = "flex";
+  burst = true;
+}
+
+document.getElementById("open").addEventListener("click", () =>
+  openPopup("Do you forgive me?", "I'm really, really sorry 🥺", false));
+
+// floating hearts
+const c = document.getElementById("hearts"), ctx = c.getContext("2d");
+let hearts = [], burst = false;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function size() { c.width = innerWidth * devicePixelRatio; c.height = innerHeight * devicePixelRatio; ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+size(); addEventListener("resize", size);
+function heart(x, y, s, a) {
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = "#e8466d";
+  ctx.beginPath(); ctx.moveTo(x, y + s * .3);
+  ctx.bezierCurveTo(x, y, x - s * .5, y, x - s * .5, y + s * .3);
+  ctx.bezierCurveTo(x - s * .5, y + s * .6, x, y + s * .8, x, y + s);
+  ctx.bezierCurveTo(x, y + s * .8, x + s * .5, y + s * .6, x + s * .5, y + s * .3);
+  ctx.bezierCurveTo(x + s * .5, y, x, y, x, y + s * .3);
+  ctx.fill(); ctx.restore();
+}
+function tick() {
+  const n = burst ? 6 : 0.08;
+  for (let i = 0; i < Math.floor(n) + (Math.random() < n % 1 ? 1 : 0); i++)
+    hearts.push({ x: Math.random() * innerWidth, y: innerHeight + 20, s: 10 + Math.random() * (burst ? 26 : 16), v: .6 + Math.random() * (burst ? 3 : 1), a: burst ? .8 : .35 });
+  if (burst && hearts.length > 400) burst = false;
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  hearts = hearts.filter(h => (h.y -= h.v) > -40);
+  hearts.forEach(h => heart(h.x + Math.sin(h.y / 30) * 6, h.y, h.s, h.a));
+  requestAnimationFrame(tick);
+}
+if (!reduce) tick();
+</script>
+
+</body></html>
